@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Public API Requests</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="css/normalize.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <!-- =======================
+            Gallery container 
+        ======================== -->
+        <header>
+            <div class="header-inner-container">
+                <div class="header-text-container">
+                    <h1>AWESOME STARTUP EMPLOYEE DIRECTORY</h1>
+                </div>
+                
+                <div class="search-container">
+                    <!-- ======================
+                        Search markup: 
+
+                        You can use the commented out markup below as a template
+                        for your search feature, but you must use JS to create and 
+                        append it to `search-container` div.
+
+                        IMPORTANT: Altering the arrangement of the markup and the 
+                        attributes used may break the styles or functionality.
+
+                        <form action="#" method="get">
+                            <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+                        </form>
+                    ======================= -->
+                </div>
+            </div>
+        </header>
+
+        <div id="gallery" class="gallery">
+            <!-- ======================
+                Gallery markup: 
+
+                You can use the commented out markup below as a template
+                for each of your Gallery items, but you must use JS to 
+                create and append them to the `gallery` div.
+
+                IMPORTANT: Altering the arrangement of the markup and the 
+                attributes used may break the styles or functionality.
+
+                <div class="card">
+                    <div class="card-img-container">
+                        <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+                    </div>
+                    <div class="card-info-container">
+                        <h3 id="name" class="card-name cap">first last</h3>
+                        <p class="card-text">email</p>
+                        <p class="card-text cap">city, state</p>
+                    </div>
+                </div>
+            ======================= -->              
+        </div>
+
+        <!-- =======================
+            Modal markup:
+
+            You can use the commented out markup below as a template
+            for your modal, but you must use JS to create and append 
+            it to `body`.
+
+            IMPORTANT: Altering the arrangement of the markup and the 
+            attributes used may break the styles or functionality.
+
+            <div class="modal-container">
+                <div class="modal">
+                    <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                    <div class="modal-info-container">
+                        <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                        <h3 id="name" class="modal-name cap">name</h3>
+                        <p class="modal-text">email</p>
+                        <p class="modal-text cap">city</p>
+                        <hr>
+                        <p class="modal-text">(555) 555-5555</p>
+                        <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+                        <p class="modal-text">Birthday: 10/21/2015</p>
+                    </div>
+                </div>
+
+                // IMPORTANT: Below is only for exceeds tasks 
+                <div class="modal-btn-container">
+                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                </div>
+            </div>
+        ======================== -->
+
+        <!-- Add your JS here -->
+        <script>
+
+        function employees () {
+            let employees = JSON.parse(this.responseText);
+            for (let i = 0; i < employees.results.length; i++){
+                let employee_name = employees.results[i].name.first + " " + employees.results[i].name.last;
+                let employee_email = employees.results[i].email;
+                let employee_city = employees.results[i].location.city;
+                let small_picture = employees.results[i].picture.thumbnail;
+                let card = `
+                <div class="card">
+                        <div class="card-img-container">
+                            <img class="card-img" src="${small_picture}" alt="profile picture">
+                        </div>
+                        <div class="card-info-container">
+                            <h3 id="name" class="card-name cap">${employee_name}</h3>
+                            <p class="card-text">${employee_email}</p>
+                            <p class="card-text cap">${employee_city}</p>
+                        </div>
+                </div>
+                `
+                gallery.innerHTML += card;
+            }
+        }
+
+//needed to have a switch/case function for abbreviated states in the modal view.
+//originally taken from https://stackoverflow.com/questions/3925195/making-state-abbreviations-from-state-names and 
+//edited to fit this project March 13, 2020.
+        function abbreviateYoState(state){
+            switch (state.toUpperCase())
+            {
+                case "ALABAMA":
+                    return 'AL';
+                    break
+
+                case "ALASKA":
+                    return 'AK';
+                    break
+
+                case "ARIZONA":
+                    return 'AZ';
+                    break
+
+                case "ARKANSAS":
+                    return 'AR';
+                    break
+
+                case "CALIFORNIA":
+                    return 'CA';
+                    break
+
+                case "COLORADO":
+                    return 'CO';
+                    break
+
+                case "CONNECTICUT":
+                    return 'CT';
+                    break
+
+                case "DELAWARE":
+                    return 'DE';
+                    break
+
+                case "FLORIDA":
+                    return 'FL';
+                    break
+
+                case "GEORGIA":
+                    return 'GA';
+                    break
+
+                case "HAWAII":
+                    return 'HI';
+                    break
+
+                case "IDAHO":
+                    return 'ID';
+                    break
+
+                case "ILLINOIS":
+                    return 'IL';
+                    break
+
+                case "INDIANA":
+                    return 'IN';
+                    break
+
+                case "IOWA":
+                    return 'IA';
+                    break
+
+                case "KANSAS":
+                    return 'KS';
+                    break
+
+                case "KENTUCKY":
+                    return 'KY';
+                    break
+
+                case "LOUISIANA":
+                    return 'LA';
+                    break
+
+                case "MAINE":
+                    return 'ME';
+                    break
+
+                case "MARYLAND":
+                    return 'MD';
+                    break
+
+                case "MASSACHUSETTS":
+                    return 'MA';
+                    break
+
+                case "MICHIGAN":
+                    return 'MI';
+                    break
+
+                case "MINNESOTA":
+                    return 'MN';
+                    break
+
+                case "MISSISSIPPI":
+                    return 'MS';
+                    break
+
+                case "MISSOURI":
+                    return 'MO';
+                    break
+
+                case "MONTANA":
+                    return 'MT';
+                    break
+
+                case "NEBRASKA":
+                    return 'NE';
+                    break
+
+                case "NEVADA":
+                    return 'NV';
+                    break
+
+                case "NEW HAMPSHIRE":
+                    return 'NH';
+                    break
+
+                case "NEW JERSEY":
+                    return 'NJ';
+                    break
+
+                case "NEW MEXICO":
+                    return 'NM';
+                    break
+
+                case "NEW YORK":
+                    return 'NY';
+                    break
+
+                case "NORTH CAROLINA":
+                    return 'NC';
+
+                case "NORTH DAKOTA":
+                    return 'ND';
+                    break
+
+                case "OHIO":
+                    return 'OH';
+                    break
+
+                case "OKLAHOMA":
+                    return 'OK';
+                    break
+
+                case "OREGON":
+                    return 'OR';
+                    break
+
+                case "PENNSYLVANIA":
+                    return 'PA';
+                    break
+
+                case "RHODE ISLAND":
+                    return 'RI';
+                    break
+
+                case "SOUTH CAROLINA":
+                    return 'SC';
+                    break
+
+                case "SOUTH DAKOTA":
+                    return 'SD';
+                    break
+
+                case "TENNESSEE":
+                    return 'TN';
+                    break
+
+                case "TEXAS":
+                    return 'TX';
+                    break
+
+                case "UTAH":
+                    return 'UT';
+                    break
+
+                case "VERMONT":
+                    return 'VT';
+                    break
+
+                case "VIRGINIA":
+                    return 'VA';
+                    break
+
+                case "WASHINGTON":
+                    return 'WA';
+                    break
+
+                case "WEST VIRGINIA":
+                    return 'WV';
+                    break
+
+                case "WISCONSIN":
+                    return 'WI';
+                    break
+
+                case "WYOMING":
+                    return 'WY';
+                    break
+                
+                default: return state;
+            }
+        }
+
+        function selectedCard(selectedCard){
+            let employees = JSON.parse(xhr.response);
+            console.log(employees);
+            for (let i = 0; i < employees.results.length; i++){
+                if (selectedCard == employees.results[i].name.first + " " + employees.results[i].name.last){
+                    let employee_name = employees.results[i].name.first + " " + employees.results[i].name.last;
+                    let employee_email = employees.results[i].email;
+                    let employee_city = employees.results[i].location.city;
+                    let medium_picture = employees.results[i].picture.medium; 
+                    let employee_phone = employees.results[i].phone;
+                    let employee_abbrState = String(employees.results[i].location.state);
+                    let employee_address = employees.results[i].location.street.number + " " + employees.results[i].location.street.name +
+                    ", " + employees.results[i].location.city + ", " + abbreviateYoState(employee_abbrState) + 
+                    " " + employees.results[i].location.postcode;
+                    let dobMonth = employees.results[i].dob.date.substring(5,7);
+                    let dobDay = employees.results[i].dob.date.substring(8,10);
+                    let dobYear = employees.results[i].dob.date.substring(2,4);
+                    let modalCard = `
+                    <div class="modal-container">
+                    <div class="modal">
+                        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                        <div class="modal-info-container">
+                            <img class="modal-img" src="${medium_picture}" alt="profile picture">
+                            <h3 id="name" class="modal-name cap">${employee_name}</h3>
+                            <p class="modal-text">${employee_email}</p>
+                            <p class="modal-text cap">${employee_city}</p>
+                            <hr>
+                            <p class="modal-text">${employee_phone}</p>
+                            <p class="modal-text">${employee_address}</p>
+                            <p class="modal-text">Birthday: ${dobMonth}/${dobDay}/${dobYear}</p>
+                        </div>
+                    </div>
+                `
+                gallery.innerHTML += modalCard;
+                }
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (document.getElementById('modal-close-btn') == null) {
+                if (e.target.className == 'card-text' ||
+                    e.target.className == 'card-name cap' ||
+                    e.target.className == 'card-text cap' ||
+                    e.target.className == 'card-img') {
+                        selectedCard(e.target.parentNode.parentNode.getElementsByTagName('H3')[0].textContent);
+                } else if (e.target.className == 'card-img-container' ||
+                           e.target.className == 'card-info-container') {
+                        selectedCard(e.target.parentNode.getElementsByTagName('H3')[0].textContent);
+                } else if (e.target.className == 'card'){
+                        selectedCard(e.target.getElementsByTagName('H3')[0].textContent);
+                }
+            } else if (e.target.tagName === 'BUTTON' || e.target.tagName === 'STRONG' ||
+                       e.target.className == 'modal-container') {
+                gallery.removeChild(document.getElementsByClassName('modal-container')[0]);                    
+            }
+        });
+        
+
+        let xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', employees);
+        xhr.open('GET', 'https://randomuser.me/api/?inc=name,email,location,picture,dob,phone&nat=us&results=12');
+        xhr.send();
+        
+        </script>  
+    </body>
+</html>
